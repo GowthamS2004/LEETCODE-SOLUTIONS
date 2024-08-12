@@ -17,15 +17,23 @@ class Solution {
         ListNode t2=head.next;
         while(t1!=null && t1.next!=null)
         {
-            ans.next=t2;
+
+           int temp=t1.val;
+           t1.val=t2.val;
+           t2.val=temp;
+           if(t2.next==null){break;}
+           t1=t2.next;
+           t2=t1.next;
+
+           /* ans1.next=t2;
             t1.next=t2.next;
             t2.next=t1;
-            ans=t1;
+            ans1=t1;
             if(t1.next==null){break;}
             t1=t1.next;
-            t2=t1.next;
+            t2=t1.next;*/
             
         }
-        return ans1.next;
+        return head;
     }
 }
