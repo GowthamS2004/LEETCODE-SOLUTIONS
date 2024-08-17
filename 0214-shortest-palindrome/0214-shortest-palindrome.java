@@ -37,32 +37,33 @@ class Solution {
     //    
     public int largest_pal_length(String str)
     {
-      String reversedStr = new StringBuilder(str).reverse().toString();
-    String combinedStr = str + "#" + reversedStr;
-    int n = str.length();
-    int[] lps = new int[combinedStr.length()];
-    
-    // Build LPS array for KMP algorithm
-    int len = 0;  // Length of the previous longest prefix suffix
-    int i = 1;    // Index in combinedStr
-    
-    while (i < combinedStr.length()) {
-        if (combinedStr.charAt(i) == combinedStr.charAt(len)) {
-            len++;
-            lps[i] = len;
+      String s=str+"#"+rev(str);
+      int i=0;
+      int j=1;
+      
+      int[]lps=new int[s.length()];
+     while(i<str.length() && j<s.length())
+     {
+         if(s.charAt(i)==s.charAt(j))
+         {
             i++;
-        } else {
-            if (len != 0) {
-                len = lps[len - 1];
-            } else {
-                lps[i] = 0;
-                i++;
+            lps[j]=i;
+            j++;
+         }
+         else
+         {
+            if(i!=0)
+            {
+                i=lps[i-1];
             }
-        }
-    }
-    
-    // The length of the longest palindromic prefix
-    return lps[combinedStr.length() - 1];
+           else {
+                lps[j] = 0;
+                j++;
+            }
+         }
+      }
+      return lps[s.length()-1];
+      
      
     }
 
