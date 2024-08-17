@@ -1,42 +1,41 @@
-public class Solution {
+class Solution {
     public List<List<String>> partition(String s) {
-        int n = s.length();
-        boolean[][] dp = new boolean[n][n];
-
-        // Initialize the DP table for single characters and pairs
-        for (int i = 0; i < n; i++) {
-            dp[i][i] = true;
+        List<List<String>> result=new ArrayList<>();
+        List<String> list=new ArrayList<>();
+        solve(s,result,list,0);
+        return result;
+    }
+    public void solve(String s, List<List<String>> result,List<String> list,int start)
+    {
+        if(start==s.length())
+        {
+            result.add(new ArrayList<>(list));
+            return;
         }
-        for (int length = 2; length <= n; length++) {
-            for (int i = 0; i <= n - length; i++) {
-                int j = i + length - 1;
-                if (s.charAt(i) == s.charAt(j) && (length == 2 || dp[i + 1][j - 1])) {
-                    dp[i][j] = true;
+        else
+        {
+            for(int i=start;i<=s.length()-1;i++)
+            {
+                if(isPalindrome(s,start,i))
+                {
+                    list.add(s.substring(start,i+1));
+                    solve(s,result,list,i+1);
+                    list.remove(list.size()-1);
                 }
             }
         }
-
-        List<List<String>> result = new ArrayList<>();
-        backtrack(s, 0, new ArrayList<>(), result, dp);
-        return result;
     }
-
-    private void backtrack(String s, int start, List<String> path, List<List<String>> result, boolean[][] dp) {
-        // If we've reached the end of the string, add the current partition to the result list
-        if (start == s.length()) {
-            result.add(new ArrayList<>(path));
-            return;
-        }
-        // Explore all possible partitions
-        for (int end = start; end < s.length(); end++) {
-            // Use the DP table to check if the substring s[start:end+1] is a palindrome
-            if (dp[start][end]) {
-                path.add(s.substring(start, end + 1));
-                // Recur to find other partitions
-                backtrack(s, end + 1, path, result, dp);
-                // Backtrack to explore other partitions
-                path.remove(path.size() - 1);
+    public boolean isPalindrome(String str,int s,int e)
+    {
+         while(s<=e)
+         {
+            if(str.charAt(s)!=str.charAt(e))
+            {
+                return false;
             }
-        }
+            s++;e--;
+         }
+         return true;
     }
+   
 }
