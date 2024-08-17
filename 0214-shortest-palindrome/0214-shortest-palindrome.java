@@ -7,13 +7,16 @@ class Solution {
         // if there is no pal i=1 
         //else i=last index of largest pal
         int i=largest_pal_length(s);
+        String r=rev(s.substring(i));
+
          // int i=1;
-          while(!isPal(s))
+        /*  while(!isPal(s))
           {
              s=s.charAt(i)+s;
              i+=2;
-          }
-        return s;
+          }*/
+
+        return r+s;
        
     }
     public boolean isPal(String str)
@@ -41,5 +44,12 @@ class Solution {
             }
         }
         return 1;
+    }
+
+    //reverse
+    public String rev(String str)
+    {
+         String reversed = new StringBuilder(str).reverse().toString();
+          return reversed; 
     }
 }
