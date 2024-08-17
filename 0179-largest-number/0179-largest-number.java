@@ -9,6 +9,6 @@ class Solution {
         for(int i=0;i<nums.length;i++){
             ans+=s[i];
         }
-        return ans.charAt(0)=='0'?"0" : ans;
+        return  ans;
     }
 }
