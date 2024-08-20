@@ -1,24 +1,51 @@
+
+
+
 class Solution {
-    public int[] findErrorNums(int[] nums)
-     {
-        int n=nums.length;
-        int[]a=new int[2];
-        int sum=((n)*(n+1))/2;int sum1=0;
-        ArrayList<Integer>al=new ArrayList<>();
-        for(int i=0;i<n;i++)
-        {
-            if(!al.contains(nums[i]))
-            {
-                al.add(nums[i]);
-            }
-            else
-            {
-                a[0]=nums[i];
-            }
-            sum1=sum1+nums[i];
+    public int[] findErrorNums(int[] nums) {
+        int n = nums.length;
+        int xorAll = 0;
+        int xorArray = 0;
+
+        for (int i = 1; i <= n; i++) {
+            xorAll ^= i;
         }
-        sum1=sum1-a[0];
-         a[1]= sum-sum1;
-        return a;
+
+        for (int num : nums) {
+            xorArray ^= num;
+        }
+
+        int xorResult = xorArray ^ xorAll;
+
+        int rightmostSetBit = xorResult & -xorResult;
+
+        int xorSet = 0;
+        int xorNotSet = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if ((i & rightmostSetBit) != 0) {
+                xorSet ^= i;
+            } else {
+                xorNotSet ^= i;
+            }
+        }
+
+        for (int num : nums) {
+            if ((num & rightmostSetBit) != 0) {
+                xorSet ^= num;
+            } else {
+                xorNotSet ^= num;
+            }
+        }
+
+        for (int num : nums) {
+            if (num == xorSet) {
+                return new int[]{xorSet, xorNotSet};
+            }
+        }
+
+        return new int[]{xorNotSet, xorSet};
     }
 }
+
+
