@@ -1,24 +1,9 @@
 class Solution {
     public int findComplement(int num) {
-       if(num==1 || num==2147483647){return 0;}
-       int ind,pow=1;
-        for( ind=0;ind<30;ind++)
-        {
-           if(pow==num)
-           {
-            break;
-           }
-           else if(pow>num)
-           {
-            ind--;
-            break;
-           }
-           pow*=2;
-        }
-        for(int i=0;i<=ind;i++)
-        {
-            num=(num^(1<<i));
-        }
-        return num;
+        // Calculate the bit mask (a number with all bits set to 1 for the bit length of num)
+        int mask = (Integer.highestOneBit(num) << 1) - 1;
+        
+        // XOR the number with the mask to flip its bits
+        return num ^ mask;
     }
 }
