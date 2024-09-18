@@ -11,8 +11,8 @@ class Solution {
             String max=s[0];  
             for(int i=1;i<n-k;i++)
             {
-                BigInteger a = new BigInteger(s[i - 1] + s[i]);
-                BigInteger b = new BigInteger(s[i] + s[i - 1]);
+                BigInteger a = new BigInteger(max + s[i]);
+                BigInteger b = new BigInteger(s[i] + max);
                 if(a.compareTo(b) < 0)
                 {
                    max=s[i];
